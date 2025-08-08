@@ -1,0 +1,33 @@
+import { useEffect, useState } from "react";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadLinksPreset } from "@tsparticles/preset-links";
+
+const ParticleBackground = () => {
+  const [engineReady, setEngineReady] = useState(false);
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadLinksPreset(engine);
+    }).then(() => {
+      setEngineReady(true);
+    });
+  }, []);
+
+  if (!engineReady) return null;
+
+  return (
+    <Particles
+      id="tsparticles"
+      options={{
+        preset: "links",
+        background: {
+          color: {
+            value: "transparent", 
+          },
+        },
+      }}
+    />
+  );
+};
+
+export default ParticleBackground;
